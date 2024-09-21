@@ -14,6 +14,7 @@ export const getAndCountImagesApi = async ({ pageParam }) => {
     }
 }
 
+
 export const findImagesByImageApi = async (imgId) => {
     try {
         const url = `http://localhost:5001/image-search?imgId=${imgId}&k=100`

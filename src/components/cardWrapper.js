@@ -1,21 +1,20 @@
 import React, { useCallback, useMemo, useRef } from 'react'
 import { useInfiniteQuery } from 'react-query'
-import { getAndCountImagesByColorsApi } from '../apis/colorApi'
 import { getAndCountImagesApi } from '../apis/imageApi'
 import { ErrorPage } from '../pages'
 import Card from './card'
 import { CardWrapperSkeleton } from './skeleton'
-const CardWrapper = ({ id }) => {
+const CardWrapper = () => {
     const observer = useRef(null)
 
     const { data, error, fetchNextPage, hasNextPage, isFetching, isLoading }
         = useInfiniteQuery({
-            queryKey: ['inf-query', id],
+            queryKey: ['inf-query'],
             queryFn: ({ pageParam = 0 }) => {
-                return !id ? getAndCountImagesApi({ pageParam }) : getAndCountImagesByColorsApi({ id, pageParam })
+                return getAndCountImagesApi({ pageParam })
             },
             getNextPageParam: (lastPage, allPages) => {
-                return lastPage && Array.isArray(lastPage) && lastPage.length ? allPages.length + 1 : undefined
+                return lastPage && Array.isArray(lastPage) && lastPage.length ? allPages.length * +process.env.REACT_APP_LIMIT : undefined
             }
         })
 

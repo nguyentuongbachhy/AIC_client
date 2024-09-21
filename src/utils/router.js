@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { ErrorPage, Home, ImageSearch, Layout, NotFound, ObjectDetection, TextSearch } from '../pages'
+import { ErrorPage, Home, ImageSearch, Layout, NotFound, SimilarSearch, TextSearch } from '../pages'
 
 const router = createBrowserRouter([
     {
@@ -19,8 +19,8 @@ const router = createBrowserRouter([
                 element: <TextSearch />
             },
             {
-                path: '/object-detection',
-                element: <ObjectDetection />
+                path: '/folder-search',
+                element: <SimilarSearch />
             },
             {
                 path: '*',

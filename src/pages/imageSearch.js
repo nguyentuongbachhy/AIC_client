@@ -103,7 +103,7 @@ const ImageSearch = () => {
     }
 
     return (
-        <div className="w-full h-full flex flex-col gap-10 pt-5 overflow-y-scroll">
+        <div className="w-full h-full flex flex-col gap-10 pt-5 overflow-y-scroll scroll-smooth">
             <div
                 className="relative w-[32rem] h-[18rem] rounded-md cursor-pointer mx-auto"
                 ref={imgRef}

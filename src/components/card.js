@@ -16,7 +16,7 @@ const Card = ({ id, folder_id, child_folder_id, id_frame, image_path, frame_mapp
                 }
             })
         }, {
-            threshold: 0.5
+            threshold: 0
         })
 
         if (ref?.current) {
@@ -41,7 +41,7 @@ const Card = ({ id, folder_id, child_folder_id, id_frame, image_path, frame_mapp
     return (
         inView ? (
             <div
-                className={`relative w-64 h-36 rounded-md overflow-hidden cursor-pointer ${className}`}
+                className={`relative w-64 rounded-md overflow-hidden cursor-pointer aspect-video ${className}`}
                 onClick={handleOnclick}
             >
                 <img

@@ -19,8 +19,8 @@ const links = [
         icon: TbSearch
     },
     {
-        name: 'Object Detection',
-        href: '/object-detection',
+        name: 'Folder Search',
+        href: '/folder-search',
         icon: FaRegObjectGroup
     }
 ]

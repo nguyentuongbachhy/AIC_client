@@ -1,19 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { getAllColorsApi } from '../apis/colorApi'
+import React from 'react'
+import { useColors } from '../apis/colorApi'
 
 const ColorBar = ({ setId }) => {
-    const [rows, setRows] = useState([])
-
-    useEffect(() => {
-        const getAllColors = async () => {
-            const response = await getAllColorsApi()
-            setRows(response);
-        }
-        getAllColors()
-    }, [])
-
-    const handleOnClick = (id) => {
-        setId(id)
+    const { data } = useColors()
+    const handleOnClick = (value) => {
+        setId(value)
     }
 
     return (
@@ -24,7 +15,7 @@ const ColorBar = ({ setId }) => {
             >
                 Default
             </li>
-            {rows.map((item, index) => (
+            {data && data.map((item, index) => (
                 <li
                     key={`${item.id}-${index}`}
                     className='w-12 h-12 rounded-md border border-gray-500 shadow-md hover:border-blue-500 cursor-pointer'
