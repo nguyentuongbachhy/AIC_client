@@ -1,18 +1,24 @@
 import React, { useState } from 'react'
 import { useDropdown } from '../apis/dropdown'
+import { getImagesByFoldersApi } from '../apis/imageApi'
 
-const Input = () => {
+const Input = ({ setData, setIsLoading }) => {
 
     const { data } = useDropdown()
     const [currentFolder, setCurrentFolder] = useState(null)
     const [subFolder, setSubFolder] = useState(null)
 
-    const handleOnClick = (e) => {
+    const handleOnClick = async (e) => {
         e.preventDefault()
-        console.log({
-            "folder": currentFolder,
-            "subFolder": subFolder
-        });
+        setIsLoading(true)
+        const inputData = {
+            "folder_id": currentFolder,
+            "subfolder_id": subFolder
+        };
+        const response = await getImagesByFoldersApi(inputData)
+        setIsLoading(true)
+        setData(response)
+        setIsLoading(false)
     }
 
     return (

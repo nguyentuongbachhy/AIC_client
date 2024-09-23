@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Navigate, useSearchParams } from 'react-router-dom';
-import { downloadExcel, findImagesByImageApi, findImagesByPartApi } from '../apis/imageApi';
+import { downloadCSV, findImagesByImageApi, findImagesByPartApi } from '../apis/imageApi';
 import { Card } from '../components';
-import { CardSkeleton, CardWrapperSkeleton } from '../components/skeleton';
+import { CardWrapperSkeleton, Skeleton } from '../components/skeleton';
 import ErrorPage from './errorPage';
 
 const ImageSearch = () => {
@@ -69,7 +69,7 @@ const ImageSearch = () => {
 
     const handleDownloadExcel = async (e) => {
         e.preventDefault()
-        const res = await downloadExcel(data)
+        const res = await downloadCSV(data)
         console.log(res)
     }
 
@@ -92,10 +92,13 @@ const ImageSearch = () => {
 
     if (isLoading) {
         return (
-            <div className="w-full h-full flex flex-col gap-10">
-                <CardSkeleton className="w-[32rem] h-[18rem] mx-auto" />
+            <div className="w-full h-full flex flex-col gap-10 pt-5 overflow-y-scroll scroll-smooth">
+                <Skeleton className="w-[32rem] h-[18rem] rounded-md mx-auto" />
                 <div className="sm:w-[32.5rem] md:w-[49rem] lg:w-[65.5rem] h-full flex flex-col mx-auto gap-2">
-                    <p className="w-full h-full text-[32px] font-bold text-black">Similar images:</p>
+                    <div className='w-full flex items-center justify-between'>
+                        <p className="text-[32px] font-bold text-black">Similar images:</p>
+                        <button className='px-2 py-1 border rounded-md'>Download</button>
+                    </div>
                     <CardWrapperSkeleton />
                 </div>
             </div>

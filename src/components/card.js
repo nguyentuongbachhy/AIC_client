@@ -1,31 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
+import { useInView } from 'react-intersection-observer'
 import { createSearchParams, useNavigate } from 'react-router-dom'
 import getImageName from './getImageName'
 import { CardSkeleton } from './skeleton'
 
 const Card = ({ id, folder_id, child_folder_id, id_frame, image_path, frame_mapping_index, className }) => {
-    const ref = useRef(null)
-    const [inView, setInView] = useState(false)
+    const { ref, inView } = useInView({
+        threshold: 0.1,
+        triggerOnce: true,
+    })
+
     const navigate = useNavigate()
-
-    useEffect(() => {
-        const observer = new IntersectionObserver((entries, obs) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    setInView(true)
-                }
-            })
-        }, {
-            threshold: 0
-        })
-
-        if (ref?.current) {
-            observer.observe(ref.current)
-        }
-        return () => {
-            observer.disconnect()
-        }
-    }, [])
 
     const handleOnclick = () => {
         navigate({
