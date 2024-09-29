@@ -26,7 +26,7 @@ const Card = ({ id, folder_id, child_folder_id, id_frame, image_path, frame_mapp
     return (
         inView ? (
             <div
-                className={`relative w-64 rounded-md overflow-hidden cursor-pointer aspect-video ${className}`}
+                className={`relative w-64 h-36 rounded-md overflow-hidden cursor-pointer ${className}`}
                 onClick={handleOnclick}
             >
                 <img

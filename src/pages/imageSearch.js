@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Navigate, useSearchParams } from 'react-router-dom';
-import { downloadCSV, findImagesByImageApi, findImagesByPartApi } from '../apis/imageApi';
+import { downloadCSV, findImagesByImageApi, findImagesByPartApi, getAdjacentApi } from '../apis/imageApi';
 import { Card } from '../components';
 import { CardWrapperSkeleton, Skeleton } from '../components/skeleton';
 import ErrorPage from './errorPage';
@@ -17,6 +17,7 @@ const ImageSearch = () => {
 
     const [rectPosition, setRectPosition] = useState(null);
     const [rectSize, setRectSize] = useState({ width: 60, height: 60 });
+    const [adjacentImages, setAdjacentImages] = useState([])
     const imgRef = useRef(null);
 
     const handleMouseMove = (e) => {
@@ -81,10 +82,17 @@ const ImageSearch = () => {
     }, []);
 
     useEffect(() => {
-        if (isLoading) {
-            setRows(null);
-        }
-    }, [isLoading]);
+        const getAdjacent = async () => {
+            try {
+                const rows = await getAdjacentApi(imgId);
+                console.log('Adjacent Images:', rows);
+                setAdjacentImages(rows);
+            } catch (error) {
+                console.error("Error fetching adjacent images:", error);
+            }
+        };
+        getAdjacent();
+    }, [imgId])
 
     if (!imgId) return <Navigate to="/" replace />;
 
@@ -136,7 +144,17 @@ const ImageSearch = () => {
                 )}
             </div>
 
-            <div className="sm:w-[32.5rem] md:w-[49rem] lg:w-[65.5rem] h-full flex flex-col mx-auto gap-2">
+            <div className='sm:w-[34rem] md:w-[49rem] lg:w-[65.5rem] items-center justify-center mx-auto grid grid-cols-4 flex-nowrap whitespace-nowrap gap-2'>
+                {adjacentImages.length > 0 ? (
+                    adjacentImages.filter((item, index) => item.id - imgId !== 0).map((image, index) => (
+                        <Card key={`${image.id}-${index}`} id={image.id} folder_id={image.folder_id} child_folder_id={image.child_folder_id} id_frame={image.id_frame} image_path={image.image_path} frame_mapping_index={image.frame_mapping_index} />
+                    ))
+                ) : (
+                    <p>No adjacent images found.</p>
+                )}
+            </div>
+
+            <div className="sm:w-[34rem] md:w-[49rem] lg:w-[65.5rem] flex flex-col mx-auto gap-2">
                 <div className='w-full flex items-center justify-between'>
                     <p className="text-[32px] font-bold text-black">Similar images:</p>
                     <button className='px-2 py-1 border rounded-md' onClick={handleDownloadExcel}>Download</button>
@@ -144,7 +162,7 @@ const ImageSearch = () => {
                 {isClickLoading ? (
                     <CardWrapperSkeleton />
                 ) : (
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                    <div className="scrollbar-none grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                         {(rows || data)?.map((image, index) => (
                             <Card key={`${image.id}-${index}`} id={image.id} folder_id={image.folder_id} child_folder_id={image.child_folder_id} id_frame={image.id_frame} image_path={image.image_path} frame_mapping_index={image.frame_mapping_index} />
                         ))}

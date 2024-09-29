@@ -45,7 +45,7 @@ const CardWrapper = () => {
     if (isLoading) return <CardWrapperSkeleton />
 
     return (
-        <div className='sm:w-[32.5rem] md:w-[49rem] lg:w-[65.5rem] h-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mx-auto'>
+        <div className='sm:w-[34rem] md:w-[49rem] lg:w-[65.5rem] h-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mx-auto'>
             {imageList.map((image, index) => (
                 <div key={`${image.id}-${index}`} ref={index === imageList.length - 13 ? lastElementRef : null}>
                     <Card id={image.id} folder_id={image.folder_id} child_folder_id={image.child_folder_id} id_frame={image.id_frame} image_path={image.image_path} frame_mapping_index={image.frame_mapping_index} />

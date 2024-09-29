@@ -12,7 +12,7 @@ export const CardSkeleton = ({ className }) => {
 
 export const CardWrapperSkeleton = () => {
     return (
-        <div className="sm:w-[32.5rem] md:w-[49rem] lg:w-[65.5rem] h-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mx-auto">
+        <div className="sm:w-[34rem] md:w-[49rem] lg:w-[65.5rem] h-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mx-auto">
             <CardSkeleton />
             <CardSkeleton />
             <CardSkeleton />

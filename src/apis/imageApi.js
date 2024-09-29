@@ -59,7 +59,7 @@ export const findImagesByPartApi = async (data) => {
 
 export const getImagesByFoldersApi = async (data) => {
     try {
-        const url = `http://localhost:2701/image-api/get-image-by-folders?folder_id=${data['folder_id']}&subfolder_id=${data['subfolder_id']}`
+        const url = `http://localhost:2701/image-api/get-image-by-folders?folder_id=${data['folder_id']}&subfolder_id=${data['subfolder_id']}&left=${data['left']}&right=${data['right']}`
         const response = await axios.get(url)
         if (response?.status === 200) {
             const rows = response?.data
@@ -95,3 +95,18 @@ export const downloadCSV = async (data) => {
         return 0;
     }
 };
+
+export const getAdjacentApi = async (image_id) => {
+    try {
+        console.log(image_id);
+        const url = `http://localhost:2701/image-api/get-adjacent?image_id=${image_id}`
+        const response = await axios.get(url)
+        if (response?.status === 200) {
+            const rows = response?.data
+            return rows
+        }
+        return null
+    } catch (error) {
+        return null
+    }
+}
